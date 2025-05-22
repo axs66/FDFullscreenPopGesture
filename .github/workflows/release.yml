@@ -5,14 +5,18 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # 改为ubuntu，支持环境变量代理
+    runs-on: ubuntu-latest
 
-    env:
-      HTTP_PROXY: http://192.168.1.162:8899
-      HTTPS_PROXY: http://192.168.1.162:8899
-      NO_PROXY: localhost,127.0.0.1
+    # 先去掉代理，确认不使用代理时的情况
+    # env:
+    #   HTTP_PROXY: http://192.168.1.162:8899
+    #   HTTPS_PROXY: http://192.168.1.162:8899
+    #   NO_PROXY: localhost,127.0.0.1
 
     steps:
+      - name: Print proxy env
+        run: env | grep -i proxy
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
