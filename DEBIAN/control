@@ -1,0 +1,9 @@
+Package: com.axs.fdfullscreenpopgesture
+Name: FDFullscreenPopGesture
+Version: 1.0.0
+Architecture: iphoneos-arm
+Description: Fullscreen pop gesture tweak
+Maintainer: Axs
+Author: Axs
+Section: Tweaks
+Depends: mobilesubstrate
