@@ -1,4 +1,4 @@
-name: Build Deb
+name: Manual Build Deb
 
 on:
   workflow_dispatch:
@@ -8,16 +8,16 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Install dpkg
         run: brew install dpkg
 
-      - name: Make script executable
+      - name: Make build script executable
         run: chmod +x build.sh
 
-      - name: Build .deb
+      - name: Build .deb package
         run: ./build.sh
 
       - name: Upload artifact
@@ -26,8 +26,9 @@ jobs:
           name: FDFullscreenPopGesture.deb
           path: FDFullscreenPopGesture.deb
 
-      - name: Create Release
+      - name: Upload to Release
         uses: softprops/action-gh-release@v1
+        if: github.event_name == 'workflow_dispatch'
         with:
           files: FDFullscreenPopGesture.deb
         env:
