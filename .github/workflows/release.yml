@@ -15,8 +15,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y dpkg clang libclang-dev
+      - name: Install dpkg
+        run: sudo apt-get update && sudo apt-get install -y dpkg
 
       - name: Make build script executable
         run: chmod +x build.sh
@@ -24,15 +24,8 @@ jobs:
       - name: Build .deb package
         run: ./build.sh
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: FDFullscreenPopGesture
-          path: FDFullscreenPopGesture.deb
-
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v1
-        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         with:
           files: FDFullscreenPopGesture.deb
         env:
