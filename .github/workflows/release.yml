@@ -15,18 +15,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install dpkg
-        run: sudo apt-get update && sudo apt-get install -y dpkg
-
-      - name: Make build script executable
-        run: chmod +x build.sh
+      - name: Setup Theos environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ldid perl curl git fakeroot make clang unzip
+          git clone --recursive https://github.com/theos/theos.git $HOME/theos
+          echo "THEOS=$HOME/theos" >> $GITHUB_ENV
 
       - name: Build .deb package
-        run: ./build.sh
+        run: |
+          cd FDFullscreenPopGestureTweak
+          make package
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: FDFullscreenPopGesture
+          path: FDFullscreenPopGestureTweak/packages/*.deb
 
       - name: Upload to GitHub Release
+        if: github.event_name == 'workflow_dispatch'
         uses: softprops/action-gh-release@v1
         with:
-          files: FDFullscreenPopGesture.deb
+          files: FDFullscreenPopGestureTweak/packages/*.deb
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
