@@ -21,7 +21,7 @@ jobs:
         run: ./build.sh
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: FDFullscreenPopGesture
           path: FDFullscreenPopGesture.deb
@@ -32,4 +32,4 @@ jobs:
         with:
           files: FDFullscreenPopGesture.deb
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
