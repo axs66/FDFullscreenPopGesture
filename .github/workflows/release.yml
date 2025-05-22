@@ -28,7 +28,7 @@ jobs:
           make package
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: FDFullscreenPopGesture
           path: FDFullscreenPopGestureTweak/packages/*.deb
@@ -39,4 +39,4 @@ jobs:
         with:
           files: FDFullscreenPopGestureTweak/packages/*.deb
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
