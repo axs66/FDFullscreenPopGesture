@@ -11,16 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # 先去掉代理，确认不使用代理时的情况
-    # env:
-    #   HTTP_PROXY: http://192.168.1.162:8899
-    #   HTTPS_PROXY: http://192.168.1.162:8899
-    #   NO_PROXY: localhost,127.0.0.1
-
     steps:
-      - name: Print proxy env
-        run: env | grep -i proxy
-
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -33,16 +24,9 @@ jobs:
       - name: Build .deb package
         run: ./build.sh
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: FDFullscreenPopGesture
-          path: FDFullscreenPopGesture.deb
-
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v1
-        if: github.event_name == 'workflow_dispatch'
         with:
           files: FDFullscreenPopGesture.deb
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
